@@ -58,13 +58,16 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,Name,Email,Phone,Birthdate,FiliereID")] Student student)
         {
-            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", student.FiliereID);
-            if (ModelState.IsValid)
+            Console.WriteLine(student);
+            // if (ModelState.IsValid)
+            if ( student.Email != null)
             {
+            Console.WriteLine("apres");
                 _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", student.FiliereID);
             return View(student);
         }
 
@@ -97,7 +100,8 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            // if (ModelState.IsValid)
+            if (student.Email != null)
             {
                 try
                 {

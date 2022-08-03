@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcCour.Models;
-
+ 
 namespace MyProject.Controllers
 {
     public class CourController : Controller
@@ -58,7 +58,8 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourId,Name,description,FiliereID")] Cour cour)
         {
-            if (ModelState.IsValid)
+            // if (ModelState.IsValid)
+            if (cour.Name != null)
             {
                 _context.Add(cour);
                 await _context.SaveChangesAsync();
@@ -97,7 +98,8 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            // if (ModelState.IsValid)
+            if (cour.Name != null)
             {
                 try
                 {
