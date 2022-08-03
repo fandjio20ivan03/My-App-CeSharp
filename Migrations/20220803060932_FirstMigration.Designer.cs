@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MyProject.Migrations
 {
     [DbContext(typeof(MvcSchoolContext))]
-    [Migration("20220802234806_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220803060932_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,14 +20,11 @@ namespace MyProject.Migrations
 
             modelBuilder.Entity("MvcCour.Models.Cour", b =>
                 {
-                    b.Property<int>("FiliereID")
+                    b.Property<int>("CourId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CourId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Filiere_idFiliereId")
+                    b.Property<int>("FiliereID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -38,9 +35,9 @@ namespace MyProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("FiliereID");
+                    b.HasKey("CourId");
 
-                    b.HasIndex("Filiere_idFiliereId");
+                    b.HasIndex("FiliereID");
 
                     b.ToTable("Cour");
                 });
@@ -90,7 +87,7 @@ namespace MyProject.Migrations
 
             modelBuilder.Entity("MvcStudent.Models.Student", b =>
                 {
-                    b.Property<int>("FiliereID")
+                    b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -101,7 +98,7 @@ namespace MyProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Filiere_idFiliereId")
+                    b.Property<int>("FiliereID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -112,12 +109,9 @@ namespace MyProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
+                    b.HasKey("StudentId");
 
-                    b.HasKey("FiliereID");
-
-                    b.HasIndex("Filiere_idFiliereId");
+                    b.HasIndex("FiliereID");
 
                     b.ToTable("Student");
                 });
@@ -126,7 +120,7 @@ namespace MyProject.Migrations
                 {
                     b.HasOne("MvcFiliere.Models.Filiere", "Filiere_id")
                         .WithMany()
-                        .HasForeignKey("Filiere_idFiliereId")
+                        .HasForeignKey("FiliereID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -156,7 +150,7 @@ namespace MyProject.Migrations
                 {
                     b.HasOne("MvcFiliere.Models.Filiere", "Filiere_id")
                         .WithMany()
-                        .HasForeignKey("Filiere_idFiliereId")
+                        .HasForeignKey("FiliereID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

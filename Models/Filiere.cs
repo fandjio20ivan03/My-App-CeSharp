@@ -4,6 +4,7 @@ namespace MvcFiliere.Models
 {
     public class Filiere
     {
+        [Key]
         public int FiliereId { get; set; }
         public string Name { get; set; } = string.Empty;
 

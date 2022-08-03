@@ -6,12 +6,12 @@ namespace MvcCour.Models
 {
     public class Cour
     {
+        [Key]
         public int CourId { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public string description { get; set; } = string.Empty;    
 
-        [Key]
         [ForeignKey("FiliereID")]
         public int FiliereID { get; set; }
         public virtual Filiere Filiere_id { get; set; } = default!;

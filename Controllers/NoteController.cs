@@ -48,7 +48,7 @@ namespace MyProject.Controllers
         // GET: Note/Create
         public IActionResult Create()
         {
-            ViewData["CourID"] = new SelectList(_context.Cour, "FiliereID", "FiliereID");
+            ViewData["CourID"] = new SelectList(_context.Cour, "CourId", "CourId");
             ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId");
             return View();
         }
@@ -66,7 +66,7 @@ namespace MyProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourID"] = new SelectList(_context.Cour, "FiliereID", "FiliereID", note.CourID);
+            ViewData["CourID"] = new SelectList(_context.Cour, "CourId", "CourId", note.CourID);
             ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", note.FiliereID);
             return View(note);
         }
@@ -84,7 +84,7 @@ namespace MyProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["CourID"] = new SelectList(_context.Cour, "FiliereID", "FiliereID", note.CourID);
+            ViewData["CourID"] = new SelectList(_context.Cour, "CourId", "CourId", note.CourID);
             ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", note.FiliereID);
             return View(note);
         }
@@ -121,7 +121,7 @@ namespace MyProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourID"] = new SelectList(_context.Cour, "FiliereID", "FiliereID", note.CourID);
+            ViewData["CourID"] = new SelectList(_context.Cour, "CourId", "CourId", note.CourID);
             ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", note.FiliereID);
             return View(note);
         }

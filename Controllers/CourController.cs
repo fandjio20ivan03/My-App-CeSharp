@@ -21,9 +21,8 @@ namespace MyProject.Controllers
         // GET: Cour
         public async Task<IActionResult> Index()
         {
-              return _context.Cour != null ? 
-                          View(await _context.Cour.ToListAsync()) :
-                          Problem("Entity set 'MvcSchoolContext.Cour'  is null.");
+            var mvcSchoolContext = _context.Cour.Include(c => c.Filiere_id);
+            return View(await mvcSchoolContext.ToListAsync());
         }
 
         // GET: Cour/Details/5
@@ -35,7 +34,8 @@ namespace MyProject.Controllers
             }
 
             var cour = await _context.Cour
-                .FirstOrDefaultAsync(m => m.FiliereID == id);
+                .Include(c => c.Filiere_id)
+                .FirstOrDefaultAsync(m => m.CourId == id);
             if (cour == null)
             {
                 return NotFound();
@@ -47,6 +47,7 @@ namespace MyProject.Controllers
         // GET: Cour/Create
         public IActionResult Create()
         {
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId");
             return View();
         }
 
@@ -63,6 +64,7 @@ namespace MyProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", cour.FiliereID);
             return View(cour);
         }
 
@@ -79,6 +81,7 @@ namespace MyProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", cour.FiliereID);
             return View(cour);
         }
 
@@ -89,7 +92,7 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CourId,Name,description,FiliereID")] Cour cour)
         {
-            if (id != cour.FiliereID)
+            if (id != cour.CourId)
             {
                 return NotFound();
             }
@@ -103,7 +106,7 @@ namespace MyProject.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CourExists(cour.FiliereID))
+                    if (!CourExists(cour.CourId))
                     {
                         return NotFound();
                     }
@@ -114,6 +117,7 @@ namespace MyProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", cour.FiliereID);
             return View(cour);
         }
 
@@ -126,7 +130,8 @@ namespace MyProject.Controllers
             }
 
             var cour = await _context.Cour
-                .FirstOrDefaultAsync(m => m.FiliereID == id);
+                .Include(c => c.Filiere_id)
+                .FirstOrDefaultAsync(m => m.CourId == id);
             if (cour == null)
             {
                 return NotFound();
@@ -156,7 +161,7 @@ namespace MyProject.Controllers
 
         private bool CourExists(int id)
         {
-          return (_context.Cour?.Any(e => e.FiliereID == id)).GetValueOrDefault();
+          return (_context.Cour?.Any(e => e.CourId == id)).GetValueOrDefault();
         }
     }
 }

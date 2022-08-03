@@ -7,6 +7,7 @@ namespace MvcNote.Models
 {
     public class Note
     {
+        [Key]
         public int NoteId { get; set; }
 
         [ForeignKey("FiliereID")]

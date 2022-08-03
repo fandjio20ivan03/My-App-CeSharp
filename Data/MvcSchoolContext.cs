@@ -14,12 +14,10 @@ using MvcNote.Models;
             : base(options)
         {
         }
-
+        
         public DbSet<MvcFiliere.Models.Filiere> Filiere { get; set; } = default!;
+        public DbSet<MvcStudent.Models.Student> Student { get; set; } = default!;
+        public DbSet<MvcCour.Models.Cour> Cour { get; set; } = default!;
+        public DbSet<MvcNote.Models.Note> Note { get; set; } = default!;
 
-        public DbSet<MvcStudent.Models.Student>? Student { get; set; }
-
-        public DbSet<MvcCour.Models.Cour>? Cour { get; set; }
-
-        public DbSet<MvcNote.Models.Note>? Note { get; set; }
     }

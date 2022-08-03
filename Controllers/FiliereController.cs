@@ -12,7 +12,7 @@ namespace MyProject.Controllers
     public class FiliereController : Controller
     {
         private readonly MvcSchoolContext _context;
-
+ 
         public FiliereController(MvcSchoolContext context)
         {
             _context = context;

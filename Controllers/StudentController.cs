@@ -21,9 +21,8 @@ namespace MyProject.Controllers
         // GET: Student
         public async Task<IActionResult> Index()
         {
-              return _context.Student != null ? 
-                          View(await _context.Student.ToListAsync()) :
-                          Problem("Entity set 'MvcSchoolContext.Student'  is null.");
+            var mvcSchoolContext = _context.Student.Include(s => s.Filiere_id);
+            return View(await mvcSchoolContext.ToListAsync());
         }
 
         // GET: Student/Details/5
@@ -35,7 +34,8 @@ namespace MyProject.Controllers
             }
 
             var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.FiliereID == id);
+                .Include(s => s.Filiere_id)
+                .FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
                 return NotFound();
@@ -47,6 +47,7 @@ namespace MyProject.Controllers
         // GET: Student/Create
         public IActionResult Create()
         {
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId");
             return View();
         }
 
@@ -57,6 +58,7 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StudentId,Name,Email,Phone,Birthdate,FiliereID")] Student student)
         {
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", student.FiliereID);
             if (ModelState.IsValid)
             {
                 _context.Add(student);
@@ -79,6 +81,7 @@ namespace MyProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", student.FiliereID);
             return View(student);
         }
 
@@ -89,7 +92,7 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StudentId,Name,Email,Phone,Birthdate,FiliereID")] Student student)
         {
-            if (id != student.FiliereID)
+            if (id != student.StudentId)
             {
                 return NotFound();
             }
@@ -103,7 +106,7 @@ namespace MyProject.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.FiliereID))
+                    if (!StudentExists(student.StudentId))
                     {
                         return NotFound();
                     }
@@ -114,6 +117,7 @@ namespace MyProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FiliereID"] = new SelectList(_context.Filiere, "FiliereId", "FiliereId", student.FiliereID);
             return View(student);
         }
 
@@ -126,7 +130,8 @@ namespace MyProject.Controllers
             }
 
             var student = await _context.Student
-                .FirstOrDefaultAsync(m => m.FiliereID == id);
+                .Include(s => s.Filiere_id)
+                .FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
                 return NotFound();
@@ -156,7 +161,7 @@ namespace MyProject.Controllers
 
         private bool StudentExists(int id)
         {
-          return (_context.Student?.Any(e => e.FiliereID == id)).GetValueOrDefault();
+          return (_context.Student?.Any(e => e.StudentId == id)).GetValueOrDefault();
         }
     }
 }

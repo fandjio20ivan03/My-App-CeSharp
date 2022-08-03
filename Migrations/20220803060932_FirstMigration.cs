@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyProject.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,19 +27,18 @@ namespace MyProject.Migrations
                 name: "Cour",
                 columns: table => new
                 {
-                    FiliereID = table.Column<int>(type: "INTEGER", nullable: false)
+                    CourId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CourId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     description = table.Column<string>(type: "TEXT", nullable: false),
-                    Filiere_idFiliereId = table.Column<int>(type: "INTEGER", nullable: false)
+                    FiliereID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cour", x => x.FiliereID);
+                    table.PrimaryKey("PK_Cour", x => x.CourId);
                     table.ForeignKey(
-                        name: "FK_Cour_Filiere_Filiere_idFiliereId",
-                        column: x => x.Filiere_idFiliereId,
+                        name: "FK_Cour_Filiere_FiliereID",
+                        column: x => x.FiliereID,
                         principalTable: "Filiere",
                         principalColumn: "FiliereId",
                         onDelete: ReferentialAction.Cascade);
@@ -49,21 +48,20 @@ namespace MyProject.Migrations
                 name: "Student",
                 columns: table => new
                 {
-                    FiliereID = table.Column<int>(type: "INTEGER", nullable: false)
+                    StudentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StudentId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
                     Birthdate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Filiere_idFiliereId = table.Column<int>(type: "INTEGER", nullable: false)
+                    FiliereID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Student", x => x.FiliereID);
+                    table.PrimaryKey("PK_Student", x => x.StudentId);
                     table.ForeignKey(
-                        name: "FK_Student_Filiere_Filiere_idFiliereId",
-                        column: x => x.Filiere_idFiliereId,
+                        name: "FK_Student_Filiere_FiliereID",
+                        column: x => x.FiliereID,
                         principalTable: "Filiere",
                         principalColumn: "FiliereId",
                         onDelete: ReferentialAction.Cascade);
@@ -86,7 +84,7 @@ namespace MyProject.Migrations
                         name: "FK_Note_Cour_CourID",
                         column: x => x.CourID,
                         principalTable: "Cour",
-                        principalColumn: "FiliereID",
+                        principalColumn: "CourId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Note_Filiere_FiliereID",
@@ -97,9 +95,9 @@ namespace MyProject.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cour_Filiere_idFiliereId",
+                name: "IX_Cour_FiliereID",
                 table: "Cour",
-                column: "Filiere_idFiliereId");
+                column: "FiliereID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Note_CourID",
@@ -112,9 +110,9 @@ namespace MyProject.Migrations
                 column: "FiliereID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Student_Filiere_idFiliereId",
+                name: "IX_Student_FiliereID",
                 table: "Student",
-                column: "Filiere_idFiliereId");
+                column: "FiliereID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

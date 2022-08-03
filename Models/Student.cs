@@ -6,6 +6,7 @@ namespace MvcStudent.Models
 {
     public class Student
     {
+        [Key]
         public int StudentId { get; set; }
         public string Name { get; set; } = string.Empty;
 
@@ -18,7 +19,7 @@ namespace MvcStudent.Models
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
 
-        [Key]
+     
         [ForeignKey("FiliereID")]
         public int FiliereID { get; set; }
         public virtual Filiere Filiere_id { get; set; } = default!;
